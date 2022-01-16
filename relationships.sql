@@ -158,7 +158,29 @@ INSERT INTO reviews(series_id, reviewer_id, rating) VALUES
     (13,3,8.0),(13,4,7.2),
     (14,2,8.5),(14,3,8.9),(14,4,8.9);
 
+# Exercise Solution
+SELECT title, rating FROM series JOIN reviews ON series.id = reviews.series_id ORDER BY title;
 
+SELECT title, AVG(rating) FROM series JOIN reviews ON series.id = reviews.series_id GROUP BY title;
+
+SELECT first_name, last_name, rating FROM reviewers JOIN reviews ON reviews.reviewer_id = reviewers.id;
+
+SELECT title AS 'unreviewed_series' FROM series LEFT JOIN reviews ON series.id = reviews.series_id WHERE rating IS NULL;
+
+SELECT genre, ROUND(AVG(rating),2) FROM series JOIN reviews ON series.id = reviews.series_id GROUP BY genre;
+
+SELECT first_name, last_name, COUNT(*) AS 'Count', IFNULL(MIN(rating),0) AS 'MIN', IFNULL(MAX(rating),0) AS 'MAX', IFNULL(AVG(rating),0) AS 'AVG',
+IF (COUNT(rating) > 0,  'ACTIVE', 'INACTIVE') AS 'STATUS'
+FROM reviewers LEFT JOIN reviews ON reviews.reviewer_id = reviewers.id GROUP BY reviewers.id;
+
+SELECT title, rating, CONCAT(first_name,' ',last_name) FROM series 
+INNER JOIN reviews ON series.id = reviews.series_id 
+INNER JOIN reviewers on reviewers.id = reviews.reviewer_id
+ORDER BY title;
+
+DROP TABLE reviews;
+DROP TABLE series;
+DROP TABLE reviewers;
 DROP TABLE orders;
 DROP TABLE customers;
 DROP DATABASE customer_db;
