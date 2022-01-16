@@ -22,7 +22,7 @@ GROUP BY tag_id ORDER BY total DESC LIMIT 5;
 
 SELECT username, 
        Count(*) AS num_likes 
-FROM   users 
+FROM   users gi
        INNER JOIN likes 
                ON users.id = likes.user_id 
 GROUP  BY likes.user_id 
